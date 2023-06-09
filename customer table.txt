@@ -1,0 +1,21 @@
+use task;
+
+CREATE TABLE customer (
+  cust_id INT,
+  record VARCHAR(255),
+  intime VARCHAR(255),
+  outtime VARCHAR(255),
+  smp VARCHAR(255)
+);
+
+
+INSERT INTO customer (cust_id, record, intime, outtime, smp)
+VALUES (123, 'January 3', '10:00:00', '11:30:00', 'meta'),
+       (456, 'February 5', '9:30:00', '10:45:00', 'twitter'),
+       (789, 'March 8', '1:00:00', '2:30:00', 'insta'),
+       (123, 'January 6', '10:00:00', '11:30:00', 'meta'),
+       (456, 'February 7', '9:30:00', '10:45:00', 'twitter');
+       
+
+
+select * from customer;
