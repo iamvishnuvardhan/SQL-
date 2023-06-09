@@ -1,0 +1,40 @@
+use task;
+
+CREATE TABLE customer (
+  cust_id INT,
+  record VARCHAR(255),
+  intime VARCHAR(255),
+  outtime VARCHAR(255),
+  smp VARCHAR(255)
+);
+
+
+INSERT INTO customer (cust_id, record, intime, outtime, smp)
+VALUES (123, 'January 3', '10:00:00', '11:30:00', 'meta'),
+       (456, 'February 5', '9:30:00', '10:45:00', 'twitter'),
+       (245, 'April 14', '11:30:00', '12:30:00', 'insta'),
+       (123, 'January 6', '10:00:00', '11:30:00', 'meta'),
+       (456, 'February 7', '9:30:00', '10:45:00', 'twitter'),
+       (245, 'April 2', '10:30:00', '11:30:00', 'meta'),
+       (789, 'March 8', '1:00:00', '2:30:00', 'insta'),
+       (245, 'April 27', '12:30:00', '1:30:00', 'meta'),
+       (456, 'February 13', '10:30:00', '11:45:00', 'meta'),
+       (456, 'February 23', '11:30:00', '12:45:00', 'twitter'),
+
+
+       (123, 'January 4', '10:00:00', '11:30:00', 'meta'),
+       (456, 'February 6', '9:30:00', '10:45:00', 'twitter'),
+       (245, 'April 1', '10:30:00', '11:30:00', 'meta'),
+       (789, 'March 15', '1:00:00', '2:30:00', 'insta'),
+       (245, 'April 30', '12:30:00', '1:30:00', 'meta'),
+       (456, 'February 27', '10:30:00', '11:45:00', 'meta'),
+       (456, 'February 28', '11:30:00', '12:45:00', 'twitter'),
+       (245, 'April 15', '11:30:00', '12:30:00', 'insta'),
+       (123, 'January 9', '10:00:00', '11:30:00', 'meta'),
+       (456, 'February 1', '9:30:00', '10:45:00', 'twitter');
+       
+ 
+       
+
+
+select * from customer;
