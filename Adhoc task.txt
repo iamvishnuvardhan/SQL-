@@ -1,0 +1,214 @@
+CREATE DATABASE insp_1;
+
+USE insp_1
+
+SELECT *
+FROM sales_purchase_data LIMIT 10
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == =
+
+DROP TABLE
+
+IF EXISTS sales_purchase_data_updated;
+	CREATE TABLE sales_purchase_data_updated AS
+
+SELECT Row_ID
+	,Customer_ID
+	,Customer_Name
+	,Order_ID
+	,STR_TO_DATE(Order_Date, '%d-%m-%Y') AS Order_Date
+	,STR_TO_DATE(Ship_Date, '%d-%m-%Y') AS Ship_Date
+	,Ship_Mode
+	,Segment
+	,Country
+	,City
+	,STATE
+	,Region
+FROM sales_purchase_data;
+
+SELECT *
+FROM sales_purchase_data_updated;
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == >> >>
+
+seperate column_for day_month_year
+
+SELECT day(Order_Date)
+	,month(Order_Date)
+	,year(Order_Date)
+FROM sales_purchase_data_updated;
+
+SELECT day(Order_Date) AS Order_Day
+	,month(Order_Date) AS Order_Month
+	,year(Order_Date) AS Order_Year
+FROM sales_purchase_data_updated;
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == = >> >>
+
+Get the
+ORDER id alone
+FROM the order_Id COLUMN
+	AND name_it_as Order_id
+
+SELECT REPLACE(Order_ID, 'CA-', '') AS Order_id
+FROM sales_purchase_data_updated;
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == >> >>
+
+Customer id must be IN the mentioned format
+
+SELECT SUBSTRING_INDEX(Customer_ID, '-', - 1) AS Customer_id
+FROM sales_purchase_data_updated;
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == >> >>
+
+Concatenate Region
+	,Country
+	,city
+	,STATE AS location_info
+FOR each records
+	,>> >>
+
+ex: South_United states_Los Anagels_Texas
+
+SELECT CONCAT (
+		Region
+		,'_'
+		,Country
+		,'_'
+		,City
+		,'_'
+		,STATE
+		) AS location_info
+FROM sales_purchase_data_updated;
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == = >> >>
+FROM
+
+the derived TABLE sales_purchase_data_updated TABLE
+
+CREATE a new TABLE called Sales_order_info it should have
+
+CREATE TABLE Sales_order_info AS
+
+SELECT Product_ID
+	,Category
+	,Sub_Category
+	,Product_Name
+	,Sales
+	,Quantity
+	,Discount
+	,Profit
+FROM sales_purchase_data;
+
+SELECT *
+FROM Sales_order_info limit 20;
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == >> >>
+
+product id should be IN this format
+	,ex FUR - BO - 10001798 TO 10001798
+
+SELECT REPLACE(SUBSTRING(Product_ID, 9), '-', '') AS Product_ID
+FROM Sales_order_info;
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == >> >>
+
+DOUBT << << >> >> per_quantity_price should be OUTPUT OF Sales / Quantity OF each customer records
+
+SELECT Sales / Quantity AS per_quantity_price
+FROM Sales_order_info;
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == = >> >>
+
+sales_type should be 3 categories
+
+SELECT CASE 
+		WHEN Sales > 1000
+			THEN 'Super'
+		WHEN Sales > 400
+			AND Sales <= 1000
+			THEN 'Average'
+		ELSE 'Low'
+		END AS sales_type
+FROM Sales_order_info;
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == >> >>
+
+Loss will be 1
+
+IF profit IS negative
+	SELECT CASE 
+			WHEN Profit < 0
+				THEN 1
+			ELSE profit
+			END AS Loss
+	FROM Sales_order_info;
+	== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == >> >>
+
+Count OF DISTINCT order_ids IN sales_purchase_data_updated TABLE
+
+SELECT COUNT(DISTINCT Order_ID) AS distinct_order_count
+FROM sales_purchase_data_updated;
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == >> >>
+
+Count OF UNIQUE product NAMES IN Sales_order_info
+
+SELECT COUNT(DISTINCT Product_Name) AS unique_product_count
+FROM Sales_order_info;
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == >> >>
+
+Count OF DISTINCT Segments IN sales_purchase_data_updated TABLE
+
+SELECT COUNT(DISTINCT Segment) AS distinct_segment_count
+FROM sales_purchase_data_updated;
+
+SELECT segment
+FROM sales_purchase_data_updated;
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == >> >>
+
+Recent
+ORDER DATE IN sales_purchase_data_updated TABLE
+
+SELECT Order_Date
+FROM sales_purchase_data_updated;
+
+SELECT MAX(Order_Date) AS recent_order_date
+FROM sales_purchase_data_updated;
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == = >> >>
+
+Old
+ORDER DATE IN sales_purchase_data_updated TABLE
+
+SELECT MIN(Order_Date) AS old_order_date
+FROM sales_purchase_data_updated;
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == = >> >>
+
+Customer info OF ALL the columns
+FOR the maximum
+ORDER DATE
+
+SELECT *
+FROM sales_purchase_data_updated
+WHERE Order_Date = (
+		SELECT MAX(Order_Date)
+		FROM sales_purchase_data_updated
+		);
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == >> >>
+
+Customer info OF ALL the columns
+FOR the minimum
+ORDER DATE
+
+SELECT *
+FROM sales_purchase_data_updated
+WHERE Order_Date = (
+		SELECT MIN(Order_Date)
+		FROM sales_purchase_data_updated
+		);
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == >> >>
+
+No.OF UNIQUE Customers
+FROM Texas
+	AND New york
+
+SELECT COUNT(DISTINCT CASE 
+			WHEN STATE = 'Texas'
+				THEN Customer_Name
+			END) AS No_of_cust_Texas
+	,COUNT(DISTINCT CASE 
+			WHEN STATE = 'New York'
+				THEN Customer_Name
+			END) AS No_of_cust_New_York
+FROM sales_purchase_data_updated;
+== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
